@@ -9,24 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:         #f4f4f2;
-    --surface:    #ffffff;
-    --surface-2:  #f9f9f8;
-    --border:     #ddddd9;
-    --border-2:   #ebebea;
+    --bg:             #f4f4f2;
+    --surface:        #ffffff;
+    --surface-2:      #f9f9f8;
+    --border:         #ddddd9;
+    --border-2:       #ebebea;
     --text-primary:   #1a1a18;
     --text-secondary: #5a5a56;
     --text-muted:     #9a9a96;
-    --accent:     #2a7a4b;
-    --accent-dim: #eaf3ee;
+    --accent:         #2a7a4b;
+    --accent-dim:     #eaf3ee;
     --v-hr:    #b35c00;
     --v-qrs:   #1a6b3a;
     --v-qtc:   #1a4e8a;
     --v-rr:    #7a3e8a;
     --v-alarm: #c0392b;
-    --v-warn:  #b35c00;
-    --v-hrv:   #5a2d8a;
-    --v-psd:   #1a6b6b;
     --font-ui:   'Instrument Sans', sans-serif;
     --font-mono: 'DM Mono', monospace;
     --radius: 3px;
@@ -35,7 +32,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: var(--bg); color: var(--text-primary);
-    font-family: var(--font-ui); font-size: 13px; font-weight: 400;
+    font-family: var(--font-ui); font-size: 13px;
     overflow: hidden; height: 100vh; display: flex; flex-direction: column;
     -webkit-font-smoothing: antialiased;
   }
@@ -52,7 +49,7 @@
     border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .logo-name { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--text-primary); letter-spacing: 0.3px; }
-  .logo-sub  { font-family: var(--font-ui); font-size: 9px; font-weight: 400; color: var(--text-muted); margin-top: 1px; }
+  .logo-sub  { font-family: var(--font-ui); font-size: 9px; color: var(--text-muted); margin-top: 1px; }
   .vitals {
     display: flex; align-items: stretch;
     background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
@@ -62,11 +59,11 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
   .vital-cell:last-child { border-right: none; }
-  .vc-label { font-family: var(--font-ui); font-size: 7px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+  .vc-label { font-size: 7px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
   .vc-val   { font-family: var(--font-mono); font-size: 17px; font-weight: 500; line-height: 1; letter-spacing: -0.3px; }
-  .vc-unit  { font-family: var(--font-ui); font-size: 8px; color: var(--text-muted); margin-top: 1px; }
-  #diag-bar { font-family: var(--font-ui); font-size: 11px; font-weight: 600; letter-spacing: 0.2px; }
-  #ref      { font-family: var(--font-ui); font-size: 8px; font-weight: 400; color: var(--text-muted); }
+  .vc-unit  { font-size: 8px; color: var(--text-muted); margin-top: 1px; }
+  #diag-bar { font-size: 11px; font-weight: 600; letter-spacing: 0.2px; }
+  #ref      { font-size: 8px; color: var(--text-muted); }
 
   /* MAIN */
   #main { display: flex; flex: 1; overflow: hidden; }
@@ -74,33 +71,38 @@
   /* SIDEBAR */
   #sidebar {
     width: 218px; min-width: 218px; background: var(--surface);
-    border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden;
+    border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow-y: auto; overflow-x: hidden;
   }
+  #sidebar::-webkit-scrollbar { width: 3px; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border); }
   .sb-section-title {
-    padding: 11px 16px 8px; font-family: var(--font-ui); font-size: 8px; font-weight: 600;
+    padding: 11px 16px 8px; font-size: 8px; font-weight: 600;
     color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase;
     border-bottom: 1px solid var(--border-2);
   }
   .rhythm-btn {
     display: flex; align-items: center; width: calc(100% - 12px); margin: 1px 6px;
     padding: 7px 10px; border: 1px solid transparent; background: transparent;
-    color: var(--text-secondary); font-family: var(--font-ui); font-size: 11px; font-weight: 400;
+    color: var(--text-secondary); font-family: var(--font-ui); font-size: 11px;
     cursor: pointer; text-align: left; transition: all 0.1s; border-radius: var(--radius); letter-spacing: 0.1px;
   }
   .rhythm-btn:hover { background: var(--surface-2); color: var(--text-primary); }
   .rhythm-btn.active { background: var(--accent-dim); border-color: rgba(42,122,75,0.35); color: var(--accent); font-weight: 500; }
   .rhythm-dot { width: 5px; height: 5px; border-radius: 50%; margin-right: 9px; flex-shrink: 0; }
-  .rhythm-bpm { font-family: var(--font-mono); font-size: 9px; font-weight: 300; color: var(--text-muted); margin-left: auto; }
+  .rhythm-bpm { font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-left: auto; }
+
   .sb-controls { padding: 12px 16px; border-top: 1px solid var(--border-2); }
   .control-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-  .control-label { font-family: var(--font-ui); font-size: 9px; font-weight: 500; color: var(--text-secondary); }
+  .control-label { font-size: 9px; font-weight: 500; color: var(--text-secondary); }
   .control-val   { font-family: var(--font-mono); font-size: 9px; color: var(--accent); }
   input[type=range] { width: 100%; margin-bottom: 10px; accent-color: var(--accent); cursor: pointer; }
+
   .cb-row {
     display: flex; align-items: center; gap: 7px; margin-bottom: 6px;
-    font-family: var(--font-ui); font-size: 10px; font-weight: 400; color: var(--text-secondary); cursor: pointer;
+    font-size: 10px; color: var(--text-secondary); cursor: pointer;
   }
   input[type=checkbox] { accent-color: var(--accent); width: 13px; height: 13px; cursor: pointer; }
+
   #btn-sim {
     width: calc(100% - 24px); margin: 0 12px 10px; padding: 9px 0;
     border: 1px solid var(--accent); border-radius: var(--radius);
@@ -112,41 +114,24 @@
   #btn-sim:disabled { opacity: 0.5; cursor: not-allowed; }
   #prog-wrap { margin: 0 12px 10px; height: 2px; background: var(--border); border-radius: 1px; }
   #prog-bar  { height: 100%; width: 0; background: var(--accent); border-radius: 1px; transition: width 0.25s; }
-  .spec-block {
-    padding: 10px 16px; border-top: 1px solid var(--border-2); background: var(--surface-2);
-  }
-  .spec-block .spec-title {
-    font-family: var(--font-ui); font-size: 7px; font-weight: 600; color: var(--text-muted);
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;
-  }
+
+  .spec-block { padding: 10px 16px; border-top: 1px solid var(--border-2); background: var(--surface-2); }
+  .spec-block .spec-title { font-size: 7px; font-weight: 600; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
   .spec-block p { font-family: var(--font-mono); font-size: 9px; font-weight: 300; color: var(--text-muted); line-height: 1.9; }
-  #rhythm-badge { margin-top: auto; padding: 10px 14px; border-top: 1px solid var(--border); }
+
+  #rhythm-badge { padding: 10px 14px; border-top: 1px solid var(--border); }
   #badge-inner {
     padding: 8px 12px; border-radius: var(--radius); text-align: center;
     border: 1px solid var(--border); background: var(--surface-2);
   }
   #badge-label { font-family: var(--font-mono); font-size: 15px; font-weight: 500; letter-spacing: 2px; }
-  #badge-bpm   { font-family: var(--font-ui); font-size: 9px; font-weight: 400; color: var(--text-muted); margin-top: 2px; }
+  #badge-bpm   { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
 
   /* CONTENT */
   #content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-  #tabs {
-    display: flex; padding: 0 20px; background: var(--surface);
-    border-bottom: 1px solid var(--border); flex-shrink: 0;
-  }
-  .tab {
-    padding: 14px 18px; border: none; border-bottom: 2px solid transparent;
-    background: transparent; cursor: pointer; font-family: var(--font-ui);
-    font-size: 11px; font-weight: 500; color: var(--text-muted);
-    transition: all 0.1s; letter-spacing: 0.3px;
-  }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .tab:hover:not(.active) { color: var(--text-secondary); }
-  #panels { flex: 1; overflow-y: auto; padding: 16px 20px; }
+  #panels { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; }
   #panels::-webkit-scrollbar { width: 4px; }
   #panels::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-  .panel { display: none; flex-direction: column; gap: 12px; }
-  .panel.active { display: flex; }
 
   /* CANVAS */
   .canvas-wrap {
@@ -154,83 +139,36 @@
     overflow: hidden; background: #fff;
   }
   .canvas-label {
-    position: absolute; top: 7px; left: 10px; font-family: var(--font-ui);
-    font-size: 8px; font-weight: 600; color: var(--text-muted);
-    letter-spacing: 1.5px; text-transform: uppercase; pointer-events: none;
+    position: absolute; top: 7px; left: 10px; font-size: 8px; font-weight: 600;
+    color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; pointer-events: none;
   }
   canvas { display: block; width: 100%; }
 
   /* DIAG CARD */
   #diag-card {
     padding: 14px 18px; background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
     border-radius: var(--radius-lg); display: flex; align-items: center;
     justify-content: space-between; flex-wrap: wrap; gap: 12px;
   }
-  .diag-eyebrow {
-    font-family: var(--font-ui); font-size: 8px; font-weight: 600; color: var(--text-muted);
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;
-  }
-  #diag-text { font-family: var(--font-ui); font-size: 14px; font-weight: 600; }
+  .diag-eyebrow { font-size: 8px; font-weight: 600; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px; }
+  #diag-text { font-size: 14px; font-weight: 600; }
   .diag-chips { display: flex; gap: 8px; flex-wrap: wrap; }
   .chip { padding: 7px 14px; border-radius: var(--radius); text-align: center; border: 1px solid var(--border); background: var(--surface-2); }
-  .chip .chip-label { font-family: var(--font-ui); font-size: 7px; font-weight: 600; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+  .chip .chip-label { font-size: 7px; font-weight: 600; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
   .chip .chip-val   { font-family: var(--font-mono); font-size: 14px; font-weight: 500; margin-top: 2px; }
-  .chip .chip-ref   { font-family: var(--font-ui); font-size: 8px; color: var(--text-muted); margin-top: 1px; }
+  .chip .chip-ref   { font-size: 8px; color: var(--text-muted); margin-top: 1px; }
 
-  /* METRICS */
+  /* METRICS ROW */
   .metrics-row { display: flex; gap: 8px; flex-wrap: wrap; }
   .metric-card {
-    flex: 1; min-width: 100px; padding: 12px 16px; background: var(--surface);
+    flex: 1; min-width: 90px; padding: 10px 14px; background: var(--surface);
     border: 1px solid var(--border); border-radius: var(--radius); border-top: 2px solid transparent;
   }
-  .metric-card .m-label { font-family: var(--font-ui); font-size: 7px; font-weight: 600; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 6px; }
-  .metric-card .m-val   { font-family: var(--font-mono); font-size: 24px; font-weight: 400; line-height: 1; letter-spacing: -0.5px; }
-  .metric-card .m-unit  { font-family: var(--font-ui); font-size: 9px; font-weight: 400; color: var(--text-muted); margin-top: 3px; }
-  .metric-card .m-ref   { font-family: var(--font-mono); font-size: 8px; font-weight: 300; color: var(--text-muted); margin-top: 5px; }
-
-  /* TABLE */
-  .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
-  .table-header {
-    padding: 10px 16px; background: var(--surface-2); border-bottom: 1px solid var(--border);
-    font-family: var(--font-ui); font-size: 8px; font-weight: 600; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase;
-  }
-  .clin-table { width: 100%; border-collapse: collapse; }
-  .clin-table th {
-    padding: 8px 16px; font-family: var(--font-ui); font-size: 8px; font-weight: 600;
-    color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase;
-    text-align: left; border-bottom: 1px solid var(--border); background: var(--surface-2);
-  }
-  .clin-table td { padding: 9px 16px; font-family: var(--font-ui); font-size: 12px; border-bottom: 1px solid var(--border-2); }
-  .clin-table td:nth-child(2) { font-family: var(--font-mono); font-size: 12px; font-weight: 500; }
-  .clin-table tr:last-child td { border-bottom: none; }
-  .clin-table tbody tr:hover td { background: var(--surface-2); }
-  .status-badge { padding: 2px 8px; border-radius: 2px; font-family: var(--font-ui); font-size: 8px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-
-  /* HRV */
-  .hrv-cards { display: flex; gap: 8px; }
-  .hrv-card {
-    flex: 1; padding: 14px 16px; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); border-top: 2px solid var(--v-hrv);
-  }
-  .hrv-card .h-label { font-family: var(--font-ui); font-size: 8px; font-weight: 600; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 7px; }
-  .hrv-card .h-val   { font-family: var(--font-mono); font-size: 22px; font-weight: 400; color: var(--v-hrv); letter-spacing: -0.5px; }
-  .hrv-card .h-unit  { font-family: var(--font-ui); font-size: 9px; color: var(--text-muted); }
-  .hrv-card .h-desc  { font-family: var(--font-ui); font-size: 9px; font-weight: 400; color: var(--text-muted); margin-top: 8px; line-height: 1.7; }
-  #tacho-wrap {
-    height: 100px; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); display: flex; align-items: flex-end; gap: 2px; padding: 10px 12px;
-  }
-  .section-label { font-family: var(--font-ui); font-size: 8px; font-weight: 600; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
-
-  /* LEGEND */
-  .info-legend { padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); }
-  .info-legend .il-title {
-    font-family: var(--font-ui); font-size: 9px; font-weight: 600; color: var(--text-secondary);
-    margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-2);
-  }
-  .info-line { display: flex; align-items: baseline; gap: 12px; margin-bottom: 7px; font-family: var(--font-ui); font-size: 10px; font-weight: 400; color: var(--text-secondary); line-height: 1.5; }
-  .info-line .il-key { min-width: 55px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--text-primary); flex-shrink: 0; }
-  .info-note { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border-2); font-family: var(--font-ui); font-size: 9px; color: var(--text-muted); line-height: 1.8; }
+  .metric-card .m-label { font-size: 7px; font-weight: 600; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+  .metric-card .m-val   { font-family: var(--font-mono); font-size: 22px; font-weight: 400; line-height: 1; letter-spacing: -0.5px; }
+  .metric-card .m-unit  { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+  .metric-card .m-ref   { font-family: var(--font-mono); font-size: 8px; font-weight: 300; color: var(--text-muted); margin-top: 4px; }
 </style>
 </head>
 <body>
@@ -239,7 +177,8 @@
   <div class="logo-block">
     <div class="logo-mark">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-        <polyline points="1,9 4,9 5.5,4 7,14 8,7 9,11 10.5,9 17,9" stroke="#2a7a4b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="1,9 4,9 5.5,4 7,14 8,7 9,11 10.5,9 17,9"
+          stroke="#2a7a4b" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"/>
       </svg>
     </div>
     <div>
@@ -247,6 +186,7 @@
       <div class="logo-sub">Laboratorio de Electromedicina · Ing. John Freddy Remolina López</div>
     </div>
   </div>
+
   <div class="vitals">
     <div class="vital-cell">
       <div class="vc-label">FC</div>
@@ -273,33 +213,44 @@
       <div id="diag-bar" style="color:var(--accent)">—</div>
     </div>
   </div>
+
   <div id="ref">Philips IntelliVue · GE Carescape · Mindray BeneVision</div>
 </div>
 
 <div id="main">
+  <!-- SIDEBAR -->
   <div id="sidebar">
     <div class="sb-section-title">Ritmo Cardiaco</div>
     <div id="rhythm-list" style="padding:6px 0;"></div>
+
     <div class="sb-controls">
-      <div class="control-row">
-        <span class="control-label">Ruido (mV)</span>
-        <span class="control-val" id="lbl-noise">0.025</span>
-      </div>
-      <input type="range" id="sl-noise" min="0" max="0.20" step="0.005" value="0.025">
-      <div class="control-row">
-        <span class="control-label">Deriva Base (mV)</span>
-        <span class="control-val" id="lbl-drift">0.05</span>
-      </div>
-      <input type="range" id="sl-drift" min="0" max="0.30" step="0.01" value="0.05">
-      <label class="cb-row"><input type="checkbox" id="cb-filt" checked> Filtro BP 0.5–40 Hz + Notch 60 Hz</label>
-      <label class="cb-row"><input type="checkbox" id="cb-rpeak" checked> Mostrar picos R</label>
+      <!-- Ruido muy mínimo fijo, sin slider visible -->
+      <!-- Deriva base fija, sin slider visible -->
+      <label class="cb-row">
+        <input type="checkbox" id="cb-filt" checked>
+        Filtro BP 0.5–40 Hz + Notch 60 Hz
+      </label>
+      <label class="cb-row">
+        <input type="checkbox" id="cb-rpeak" checked>
+        Mostrar picos R
+      </label>
     </div>
+
     <button id="btn-sim">Simular</button>
     <div id="prog-wrap"><div id="prog-bar"></div></div>
+
     <div class="spec-block">
       <div class="spec-title">Especificaciones</div>
-      <p>Fs = 500 Hz · Duración = 6 s<br>Butter BP ord. 4 (0.5–40 Hz)<br>Notch IIR 60 Hz · Q = 35<br>Pan-Tompkins R-detection<br>HRV: SDNN / RMSSD / pNN50<br>QTc: Fórmula de Bazett</p>
+      <p>
+        Fs = 500 Hz · Duración = 6 s<br>
+        Butter BP ord. 4 (0.5–40 Hz)<br>
+        Notch IIR 60 Hz · Q = 35<br>
+        Pan-Tompkins R-detection<br>
+        QTc: Fórmula de Bazett<br>
+        Ruido: 0.005 mV · Deriva: 0.01 mV
+      </p>
     </div>
+
     <div id="rhythm-badge">
       <div id="badge-inner">
         <div id="badge-label">NSR</div>
@@ -308,281 +259,505 @@
     </div>
   </div>
 
+  <!-- CONTENT -->
   <div id="content">
-    <div id="tabs">
-      <button class="tab active" data-tab="ecg">Señal ECG</button>
-      <button class="tab" data-tab="analisis">Análisis</button>
-      <button class="tab" data-tab="hrv">HRV</button>
-      <button class="tab" data-tab="espectro">Espectro PSD</button>
-    </div>
     <div id="panels">
 
-      <div class="panel active" id="p-ecg">
-        <div class="canvas-wrap">
-          <canvas id="cv-raw" height="110"></canvas>
-          <div class="canvas-label">II · ECG Crudo — ruido / deriva / 60 Hz</div>
-        </div>
-        <div class="canvas-wrap">
-          <canvas id="cv-filt" height="160"></canvas>
-          <div class="canvas-label" id="lbl-filt">II · ECG Filtrado</div>
-        </div>
-        <div id="diag-card">
-          <div>
-            <div class="diag-eyebrow">Diagnóstico Automático</div>
-            <div id="diag-text">—</div>
-          </div>
-          <div class="diag-chips" id="chips"></div>
-        </div>
+      <!-- ECG crudo -->
+      <div class="canvas-wrap">
+        <canvas id="cv-raw" height="110"></canvas>
+        <div class="canvas-label">II · ECG Crudo — ruido / deriva / 60 Hz</div>
       </div>
 
-      <div class="panel" id="p-analisis">
-        <div class="metrics-row" id="big-metrics"></div>
-        <div class="canvas-wrap">
-          <canvas id="cv-rr" height="130"></canvas>
-          <div class="canvas-label">Intervalos RR (ms) · FC Instantánea (lpm)</div>
-        </div>
-        <div class="table-wrap">
-          <div class="table-header">Tabla de Parámetros Clínicos</div>
-          <table class="clin-table">
-            <thead><tr><th>Parámetro</th><th>Valor</th><th>Unidad</th><th>Rango Normal</th><th>Estado</th></tr></thead>
-            <tbody id="clin-tbody"></tbody>
-          </table>
-        </div>
+      <!-- ECG filtrado -->
+      <div class="canvas-wrap">
+        <canvas id="cv-filt" height="200"></canvas>
+        <div class="canvas-label" id="lbl-filt">II · ECG Filtrado</div>
       </div>
 
-      <div class="panel" id="p-hrv">
-        <div class="hrv-cards" id="hrv-cards"></div>
+      <!-- Diagnóstico -->
+      <div id="diag-card">
         <div>
-          <div class="section-label">Tacograma — FC Instantánea (lpm)</div>
-          <div id="tacho-wrap"></div>
+          <div class="diag-eyebrow">Diagnóstico Automático</div>
+          <div id="diag-text">—</div>
         </div>
-        <div class="info-legend">
-          <div class="il-title">Índices HRV — Dominio Temporal · Task Force ESC, 1996</div>
-          <div class="info-line"><span class="il-key">SDNN</span> Desviación estándar de intervalos NN. Refleja variabilidad global del ritmo cardiaco.</div>
-          <div class="info-line"><span class="il-key">RMSSD</span> Raíz cuadrática media de diferencias sucesivas. Indicador del tono vagal.</div>
-          <div class="info-line"><span class="il-key">pNN50</span> Porcentaje de diferencias sucesivas > 50 ms. Marcador de actividad parasimpática.</div>
-        </div>
+        <div class="diag-chips" id="chips"></div>
       </div>
 
-      <div class="panel" id="p-espectro">
-        <div class="canvas-wrap">
-          <canvas id="cv-psd" height="200"></canvas>
-          <div class="canvas-label">Densidad Espectral de Potencia — Método de Welch (dB/Hz)</div>
-        </div>
-        <div class="info-legend">
-          <div class="il-title">Componentes Espectrales del Filtrado</div>
-          <div class="info-line"><span class="il-key" style="color:var(--v-warn)">0.5 Hz</span> Corte inferior — elimina deriva respiratoria y artefactos de movimiento</div>
-          <div class="info-line"><span class="il-key" style="color:var(--v-alarm)">40 Hz</span> Corte superior — elimina ruido mioeléctrico (EMG) de alta frecuencia</div>
-          <div class="info-line"><span class="il-key" style="color:var(--v-hrv)">60 Hz</span> Filtro Notch — elimina interferencia de red eléctrica (AC 60 Hz Colombia)</div>
-          <div class="info-note">La energía diagnóstica del ECG se concentra entre 0.5 y 40 Hz.<br>Complejo QRS: 5–40 Hz · Onda P y T: 0.5–10 Hz · Línea base: &lt; 0.5 Hz</div>
-        </div>
-      </div>
+      <!-- Métricas -->
+      <div class="metrics-row" id="big-metrics"></div>
 
     </div>
   </div>
 </div>
 
 <script>
-const FS=500,DUR=6;
-const RITMOS={
-  normal: {label:"NSR",    nombre:"Sinusal Normal",            bpm:75, col:"#2a7a4b",ondas:[[0.15,0.160,0.025],[-0.10,0.200,0.008],[1.00,0.220,0.006],[-0.25,0.245,0.008],[0.20,0.380,0.030],[0.04,0.500,0.018]]},
-  tachy:  {label:"TACHY",  nombre:"Taquicardia Sinusal",       bpm:130,col:"#b35c00",ondas:[[0.12,0.100,0.020],[-0.08,0.135,0.006],[1.00,0.150,0.005],[-0.22,0.165,0.006],[0.18,0.270,0.025]]},
-  brady:  {label:"BRADY",  nombre:"Bradicardia Sinusal",       bpm:42, col:"#1a4e8a",ondas:[[0.18,0.200,0.030],[-0.10,0.280,0.008],[1.00,0.300,0.007],[-0.28,0.325,0.009],[0.22,0.560,0.040],[0.05,0.720,0.020]]},
-  afib:   {label:"A-FIB",  nombre:"Fibrilación Auricular",     bpm:95, col:"#c0392b",fib:true,ondas:[[-0.10,0.180,0.008],[0.90,0.200,0.006],[-0.22,0.218,0.007],[0.14,0.380,0.035]]},
-  avblock:{label:"AV BLK", nombre:"Bloqueo AV 1er Grado",     bpm:65, col:"#7a5c00",ondas:[[0.15,0.080,0.025],[-0.10,0.280,0.008],[1.00,0.300,0.006],[-0.25,0.320,0.008],[0.20,0.500,0.030]]},
-  vpb:    {label:"VPB",    nombre:"Lat. Ventricular Prematuro",bpm:72, col:"#5a2d8a",ondas:[[0.15,0.160,0.025],[-0.10,0.200,0.008],[1.00,0.220,0.006],[-0.25,0.245,0.008],[0.20,0.380,0.030]],vpb:[[-0.05,0.180,0.015],[0.80,0.210,0.015],[-0.60,0.260,0.015],[-0.18,0.440,0.045]]},
-};
-let state={ritmoKey:"normal",noise:0.025,drift:0.05,filtOn:true,showR:true,raw:null,filt:null,picos:null,res:null};
+// ─── Constantes globales ──────────────────────────────────────────────────────
+const FS  = 500;   // Frecuencia de muestreo (Hz)
+const DUR = 6;     // Duración de la señal (s)
 
-function generarSenal(key,noise,drift){
-  const R=RITMOS[key],N=Math.floor(FS*DUR),s=new Float64Array(N),ciclo=60/R.bpm;
-  for(let lat=0;lat*ciclo<DUR+ciclo;lat++){
-    const t0=lat*ciclo,cl=R.fib?ciclo*(0.65+0.70*Math.random()):ciclo;
-    const ondas=(R.vpb&&lat%3===2)?R.vpb:R.ondas;
-    for(const[A,mu0,sig]of ondas){const mu=t0+mu0*(cl/ciclo);for(let i=0;i<N;i++){const t=i/FS;s[i]+=A*Math.exp(-((t-mu)**2)/(2*sig*sig));}}
+// Ruido y deriva fijos, muy pequeños — solo para representar realismo mínimo
+const NOISE_FIXED = 0.005;   // mV
+const DRIFT_FIXED = 0.01;    // mV
+
+// ─── Definición de ritmos ─────────────────────────────────────────────────────
+// Cada onda gaussiana: [Amplitud mV, tiempo relativo en el ciclo s, sigma s]
+// Calibrados para derivación II según valores clínicos reales:
+//   Onda P:   0.1–0.2 mV,  duración ≈ 80 ms  (sigma ≈ 0.020 s)
+//   Segmento PR: 120–200 ms
+//   Complejo QRS: Q pequeña, R dominante ≈ 1 mV, S pequeña — duración < 120 ms (sigma_R ≈ 0.010 s)
+//   Onda T:   0.2–0.4 mV, asimétrica, sigma ≈ 0.040 s
+//   Onda U (opcional): < 0.1 mV
+
+const RITMOS = {
+  normal: {
+    label:"NSR", nombre:"Sinusal Normal", bpm:75, col:"#2a7a4b",
+    // [A,   t_rel(s),  sigma(s)]   — t_rel relativo al inicio del ciclo
+    ondas:[
+      [ 0.15,  0.100,  0.020 ],   // P
+      [-0.05,  0.175,  0.007 ],   // Q
+      [ 1.10,  0.195,  0.010 ],   // R
+      [-0.18,  0.215,  0.007 ],   // S
+      [ 0.30,  0.380,  0.040 ],   // T
+    ]
+  },
+  tachy: {
+    label:"TACHY", nombre:"Taquicardia Sinusal", bpm:130, col:"#b35c00",
+    ondas:[
+      [ 0.12,  0.080,  0.018 ],
+      [-0.04,  0.140,  0.006 ],
+      [ 1.10,  0.155,  0.009 ],
+      [-0.16,  0.170,  0.006 ],
+      [ 0.25,  0.290,  0.032 ],
+    ]
+  },
+  brady: {
+    label:"BRADY", nombre:"Bradicardia Sinusal", bpm:42, col:"#1a4e8a",
+    ondas:[
+      [ 0.18,  0.120,  0.022 ],
+      [-0.05,  0.215,  0.008 ],
+      [ 1.10,  0.235,  0.011 ],
+      [-0.20,  0.255,  0.008 ],
+      [ 0.35,  0.480,  0.048 ],
+    ]
+  },
+  afib: {
+    label:"A-FIB", nombre:"Fibrilación Auricular", bpm:95, col:"#c0392b",
+    fib: true,   // sin onda P definida, intervalos RR irregulares
+    ondas:[
+      [-0.05,  0.150,  0.007 ],
+      [ 1.05,  0.168,  0.010 ],
+      [-0.16,  0.186,  0.007 ],
+      [ 0.28,  0.340,  0.038 ],
+    ]
+  },
+  avblock: {
+    label:"AV BLK", nombre:"Bloqueo AV 1er Grado", bpm:65, col:"#7a5c00",
+    // PR prolongado: t_P más alejado del QRS (~240 ms)
+    ondas:[
+      [ 0.16,  0.060,  0.021 ],   // P temprana
+      [-0.05,  0.215,  0.007 ],
+      [ 1.10,  0.235,  0.010 ],
+      [-0.18,  0.253,  0.007 ],
+      [ 0.30,  0.430,  0.042 ],
+    ]
+  },
+  vpb: {
+    label:"VPB", nombre:"Lat. Ventricular Prematuro", bpm:72, col:"#5a2d8a",
+    ondas:[
+      [ 0.15,  0.100,  0.020 ],
+      [-0.05,  0.175,  0.007 ],
+      [ 1.10,  0.195,  0.010 ],
+      [-0.18,  0.215,  0.007 ],
+      [ 0.30,  0.380,  0.040 ],
+    ],
+    // Latido ectópico (cada 3er latido): QRS ancho, concordancia negativa, T invertida
+    vpb:[
+      [-0.10,  0.120,  0.012 ],
+      [ 0.75,  0.160,  0.020 ],
+      [-0.55,  0.210,  0.018 ],
+      [-0.22,  0.420,  0.050 ],
+    ]
+  },
+  lbbb: {
+    label:"LBBB", nombre:"BRI (Bloqueo Rama Izq.)", bpm:70, col:"#1a6b6b",
+    // QRS muy ancho (≥120ms), morfología RR' en V6/aVL, inversión T
+    ondas:[
+      [ 0.14,  0.100,  0.020 ],
+      [-0.04,  0.175,  0.009 ],
+      [ 0.65,  0.200,  0.018 ],
+      [ 0.40,  0.240,  0.016 ],  // segunda deflexión positiva (R')
+      [-0.60,  0.330,  0.055 ],  // T invertida
+    ]
+  },
+  stemi: {
+    label:"STEMI", nombre:"STEMI (Elevación ST)", bpm:88, col:"#c0392b",
+    // Elevación del segmento ST: la línea de base entre S y T sube
+    ondas:[
+      [ 0.15,  0.100,  0.020 ],
+      [-0.05,  0.175,  0.007 ],
+      [ 1.10,  0.195,  0.010 ],
+      [-0.10,  0.215,  0.007 ],
+      [ 0.20,  0.240,  0.015 ],  // corriente de lesión (ST)
+      [ 0.45,  0.360,  0.045 ],  // T alta hiperaguda
+    ]
+  },
+};
+
+// ─── Estado global ────────────────────────────────────────────────────────────
+let state = {
+  ritmoKey: "normal",
+  filtOn:   true,
+  showR:    true,
+  raw: null, filt: null, picos: null, res: null
+};
+
+// ─── Generación de señal ──────────────────────────────────────────────────────
+function generarSenal(key) {
+  const R  = RITMOS[key];
+  const N  = Math.floor(FS * DUR);
+  const s  = new Float64Array(N);
+  const ciclo = 60 / R.bpm;
+
+  for (let lat = 0; lat * ciclo < DUR + ciclo; lat++) {
+    const t0  = lat * ciclo;
+    // Para FA: RR variable (±30%)
+    const cl  = R.fib ? ciclo * (0.70 + 0.60 * Math.random()) : ciclo;
+    // Para VPB: cada 3er latido usa morfología ectópica
+    const ondas = (R.vpb && lat % 3 === 2) ? R.vpb : R.ondas;
+
+    for (const [A, mu0, sig] of ondas) {
+      // mu0 es tiempo relativo al ciclo; escalar si el ciclo varía (FA)
+      const mu = t0 + mu0 * (cl / ciclo);
+      for (let i = 0; i < N; i++) {
+        const t = i / FS;
+        s[i] += A * Math.exp(-((t - mu) ** 2) / (2 * sig * sig));
+      }
+    }
   }
-  if(R.fib)for(let i=0;i<N;i++){const t=i/FS;s[i]+=0.07*Math.sin(2*Math.PI*6*t)+0.05*Math.sin(2*Math.PI*7.3*t)+0.03*Math.sin(2*Math.PI*8.9*t);}
-  for(let i=0;i<N;i++){const t=i/FS;s[i]+=noise*(Math.random()*2-1);s[i]+=drift*Math.sin(2*Math.PI*0.25*t);s[i]+=0.015*Math.sin(2*Math.PI*60*t);}
+
+  // FA: ondas de fibrilación de fondo (actividad auricular caótica)
+  if (R.fib) {
+    for (let i = 0; i < N; i++) {
+      const t = i / FS;
+      s[i] += 0.06 * Math.sin(2 * Math.PI * 6.0 * t)
+             + 0.04 * Math.sin(2 * Math.PI * 7.3 * t)
+             + 0.03 * Math.sin(2 * Math.PI * 8.9 * t);
+    }
+  }
+
+  // Ruido gaussiano mínimo + deriva muy suave + interferencia 60 Hz tenue
+  for (let i = 0; i < N; i++) {
+    const t = i / FS;
+    s[i] += NOISE_FIXED * (Math.random() * 2 - 1);
+    s[i] += DRIFT_FIXED * Math.sin(2 * Math.PI * 0.20 * t);
+    s[i] += 0.008 * Math.sin(2 * Math.PI * 60 * t);
+  }
+
   return s;
 }
-function iirFilter(s,b,a){const o=new Float64Array(s.length);let x1=0,x2=0,y1=0,y2=0;for(let i=0;i<s.length;i++){const y=b[0]*s[i]+b[1]*x1+b[2]*x2-a[1]*y1-a[2]*y2;o[i]=y;x2=x1;x1=s[i];y2=y1;y1=y;}return o;}
-function bwHP(s,fc){const wc=2*Math.PI*fc/FS,k=Math.tan(wc/2),k2=k*k,sk=Math.SQRT2*k,n=1/(1+sk+k2);return iirFilter(s,[n,-2*n,n],[1,2*n*(k2-1),n*(1-sk+k2)]);}
-function bwLP(s,fc){const wc=2*Math.PI*fc/FS,k=Math.tan(wc/2),k2=k*k,sk=Math.SQRT2*k,n=1/(1+sk+k2);return iirFilter(s,[n,2*n,n],[1,2*n*(k2-1),n*(1-sk+k2)]);}
-function notchFilt(s,f0,Q=35){const w0=2*Math.PI*f0/FS,gb=Math.cos(w0),kn=Math.tan(w0/(2*Q)),n=1/(1+kn);return iirFilter(s,[n,-2*gb*n,n],[1,-2*gb*n,(1-kn)*n]);}
-function filtrar(s){let f=bwHP(s,0.5);f=bwLP(f,Math.min(40,FS/2*0.97));f=notchFilt(f,60);return f;}
-function detectarR(s){
-  let mx=-Infinity;for(let i=0;i<s.length;i++)if(s[i]>mx)mx=s[i];
-  const thr=0.55*mx,minD=Math.round(0.20*FS),p=[];
-  for(let i=1;i<s.length-1;i++)if(s[i]>thr&&s[i]>=s[i-1]&&s[i]>=s[i+1])if(!p.length||i-p[p.length-1]>minD)p.push(i);
+
+// ─── Filtros digitales ────────────────────────────────────────────────────────
+function iirFilter(s, b, a) {
+  const o = new Float64Array(s.length);
+  let x1=0, x2=0, y1=0, y2=0;
+  for (let i = 0; i < s.length; i++) {
+    const y = b[0]*s[i] + b[1]*x1 + b[2]*x2 - a[1]*y1 - a[2]*y2;
+    o[i]=y; x2=x1; x1=s[i]; y2=y1; y1=y;
+  }
+  return o;
+}
+function bwHP(s, fc) {
+  const wc=2*Math.PI*fc/FS, k=Math.tan(wc/2), k2=k*k, sk=Math.SQRT2*k, n=1/(1+sk+k2);
+  return iirFilter(s, [n,-2*n,n], [1,2*n*(k2-1),n*(1-sk+k2)]);
+}
+function bwLP(s, fc) {
+  const wc=2*Math.PI*fc/FS, k=Math.tan(wc/2), k2=k*k, sk=Math.SQRT2*k, n=1/(1+sk+k2);
+  return iirFilter(s, [n,2*n,n], [1,2*n*(k2-1),n*(1-sk+k2)]);
+}
+function notchFilt(s, f0, Q=35) {
+  const w0=2*Math.PI*f0/FS, gb=Math.cos(w0), kn=Math.tan(w0/(2*Q)), n=1/(1+kn);
+  return iirFilter(s, [n,-2*gb*n,n], [1,-2*gb*n,(1-kn)*n]);
+}
+function filtrar(s) {
+  let f = bwHP(s, 0.5);
+  f = bwLP(f, Math.min(40, FS/2*0.97));
+  f = notchFilt(f, 60);
+  return f;
+}
+
+// ─── Detección de picos R (Pan-Tompkins simplificado) ─────────────────────────
+function detectarR(s) {
+  let mx = -Infinity;
+  for (let i = 0; i < s.length; i++) if (s[i] > mx) mx = s[i];
+  const thr  = 0.50 * mx;
+  const minD = Math.round(0.20 * FS);
+  const p    = [];
+  for (let i = 1; i < s.length - 1; i++) {
+    if (s[i] > thr && s[i] >= s[i-1] && s[i] >= s[i+1]) {
+      if (!p.length || i - p[p.length-1] > minD) p.push(i);
+    }
+  }
   return p;
 }
-function analizar(s,picos){
-  if(picos.length<2)return null;
-  const rrMs=picos.slice(1).map((p,i)=>(p-picos[i])/FS*1000),rrMed=rrMs.reduce((a,b)=>a+b)/rrMs.length;
-  const fcI=rrMs.map(r=>60000/r),fcMed=fcI.reduce((a,b)=>a+b)/fcI.length;
-  const sdnn=Math.sqrt(rrMs.reduce((a,r)=>a+(r-rrMed)**2,0)/rrMs.length);
-  const diffs=rrMs.slice(1).map((r,i)=>r-rrMs[i]);
-  const rmssd=diffs.length?Math.sqrt(diffs.reduce((a,d)=>a+d*d,0)/diffs.length):0;
-  const pnn50=diffs.length?diffs.filter(d=>Math.abs(d)>50).length/diffs.length*100:0;
-  const winN=Math.round(0.075*FS),ds=new Float64Array(s.length-1).map((_,i)=>Math.abs(s[i+1]-s[i]));
-  const qrsArr=picos.map(p=>{const ini=Math.max(0,p-winN),fin=Math.min(ds.length,p+winN);let mx=0;for(let i=ini;i<fin;i++)if(ds[i]>mx)mx=ds[i];let cnt=0;for(let i=ini;i<fin;i++)if(ds[i]>0.15*mx)cnt++;return cnt/FS*1000;});
-  const qrsMs=Math.max(40,Math.min(qrsArr.reduce((a,b)=>a+b)/qrsArr.length,200));
-  const qtMs=400*Math.sqrt(rrMed/1000),qtcMs=qtMs/Math.sqrt(rrMed/1000);
-  let diag="Ritmo Sinusal Normal",diagCol="#2a7a4b";
-  if(fcMed>100){diag=`Taquicardia ${fcMed.toFixed(0)} lpm`;diagCol="#b35c00";}
-  else if(fcMed<60){diag=`Bradicardia ${fcMed.toFixed(0)} lpm`;diagCol="#1a4e8a";}
-  if(sdnn/rrMed>0.15){diag="Fibrilación Auricular";diagCol="#c0392b";}
-  if(qrsMs>120){diag+=" · QRS Ancho";diagCol="#c0392b";}
-  if(qtcMs>440){diag+=" · QTc Prolongado";diagCol="#c0392b";}
-  return{fcMed:fcMed.toFixed(1),rrMed:rrMed.toFixed(0),qrsMs:qrsMs.toFixed(0),qtMs:qtMs.toFixed(0),qtcMs:qtcMs.toFixed(0),sdnn:sdnn.toFixed(1),rmssd:rmssd.toFixed(1),pnn50:pnn50.toFixed(1),fcI,rrMs,diag,diagCol};
-}
-function calcPSD(s){
-  const N=256,step=Math.max(1,Math.floor(s.length/(N*2))),freqs=[],power=[];
-  for(let k=0;k<N/2;k++){let re=0,im=0;for(let n=0;n<N;n++){const idx=Math.min(n*step,s.length-1),w=0.5-0.5*Math.cos(2*Math.PI*n/N);re+=s[idx]*w*Math.cos(2*Math.PI*k*n/N);im-=s[idx]*w*Math.sin(2*Math.PI*k*n/N);}freqs.push(k*FS/N);power.push(10*Math.log10((re*re+im*im)/N+1e-10));}
-  return{freqs,power};
+
+// ─── Análisis de parámetros clínicos ─────────────────────────────────────────
+function analizar(s, picos) {
+  if (picos.length < 2) return null;
+  const rrMs  = picos.slice(1).map((p,i) => (p - picos[i]) / FS * 1000);
+  const rrMed = rrMs.reduce((a,b) => a+b) / rrMs.length;
+  const fcI   = rrMs.map(r => 60000 / r);
+  const fcMed = fcI.reduce((a,b) => a+b) / fcI.length;
+
+  // Estimación de duración QRS por análisis de pendiente
+  const winN = Math.round(0.080 * FS);
+  const ds   = new Float64Array(s.length - 1).map((_,i) => Math.abs(s[i+1] - s[i]));
+  const qrsArr = picos.map(p => {
+    const ini = Math.max(0, p - winN), fin = Math.min(ds.length, p + winN);
+    let mx2 = 0;
+    for (let i = ini; i < fin; i++) if (ds[i] > mx2) mx2 = ds[i];
+    let cnt = 0;
+    for (let i = ini; i < fin; i++) if (ds[i] > 0.15 * mx2) cnt++;
+    return cnt / FS * 1000;
+  });
+  const qrsMs = Math.max(40, Math.min(qrsArr.reduce((a,b) => a+b) / qrsArr.length, 200));
+
+  // QT y QTc (Bazett)
+  const qtMs  = 400 * Math.sqrt(rrMed / 1000);
+  const qtcMs = qtMs / Math.sqrt(rrMed / 1000);
+
+  // Variabilidad (SDNN) como indicador de irregularidad
+  const sdnn = Math.sqrt(rrMs.reduce((a,r) => a + (r-rrMed)**2, 0) / rrMs.length);
+
+  // Diagnóstico automático
+  let diag = "Ritmo Sinusal Normal", diagCol = "#2a7a4b";
+  if (fcMed > 100) { diag = `Taquicardia Sinusal  ${fcMed.toFixed(0)} lpm`; diagCol = "#b35c00"; }
+  else if (fcMed < 60) { diag = `Bradicardia Sinusal  ${fcMed.toFixed(0)} lpm`; diagCol = "#1a4e8a"; }
+  // FA: alta irregularidad RR
+  if (sdnn / rrMed > 0.12) { diag = "Fibrilación Auricular"; diagCol = "#c0392b"; }
+  if (qrsMs > 120) { diag += " · QRS Ancho (≥120 ms)"; diagCol = "#c0392b"; }
+  if (qtcMs > 440) { diag += " · QTc Prolongado"; diagCol = "#c0392b"; }
+
+  return {
+    fcMed:  fcMed.toFixed(1),
+    rrMed:  rrMed.toFixed(0),
+    qrsMs:  qrsMs.toFixed(0),
+    qtMs:   qtMs.toFixed(0),
+    qtcMs:  qtcMs.toFixed(0),
+    diag, diagCol, rrMs, fcI
+  };
 }
 
-function drawECG(id,sig,picos,col,showR){
-  const cv=document.getElementById(id);if(!cv||!sig)return;
-  const ctx=cv.getContext("2d"),W=cv.width=cv.offsetWidth,H=cv.height;
-  ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
-  // ECG paper grid
-  const cols=25,rows=10;
-  ctx.strokeStyle="#f5ecec";ctx.lineWidth=0.5;
-  for(let i=0;i<=cols*5;i++){ctx.beginPath();ctx.moveTo(i/(cols*5)*W,0);ctx.lineTo(i/(cols*5)*W,H);ctx.stroke();}
-  for(let j=0;j<=rows*5;j++){ctx.beginPath();ctx.moveTo(0,j/(rows*5)*H);ctx.lineTo(W,j/(rows*5)*H);ctx.stroke();}
-  ctx.strokeStyle="#e8d8d8";ctx.lineWidth=0.8;
-  for(let i=0;i<=cols;i++){ctx.beginPath();ctx.moveTo(i/cols*W,0);ctx.lineTo(i/cols*W,H);ctx.stroke();}
-  for(let j=0;j<=rows;j++){ctx.beginPath();ctx.moveTo(0,j/rows*H);ctx.lineTo(W,j/rows*H);ctx.stroke();}
-  let mn=Infinity,mx=-Infinity;
-  for(let i=0;i<sig.length;i++){if(sig[i]<mn)mn=sig[i];if(sig[i]>mx)mx=sig[i];}
-  const pad=(mx-mn)*0.18||0.1,vmin=mn-pad,vmax=mx+pad;
-  const toX=i=>(i/(sig.length-1))*W,toY=v=>H-((v-vmin)/(vmax-vmin))*H;
-  ctx.strokeStyle=col;ctx.lineWidth=1.8;ctx.lineJoin="round";ctx.lineCap="round";
-  ctx.beginPath();for(let i=0;i<sig.length;i++)i===0?ctx.moveTo(toX(i),toY(sig[i])):ctx.lineTo(toX(i),toY(sig[i]));ctx.stroke();
-  if(showR&&picos?.length){
-    for(const p of picos){
-      const x=toX(p),y=toY(sig[p]);
-      ctx.setLineDash([3,5]);ctx.strokeStyle=col+"55";ctx.lineWidth=0.8;
-      ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();ctx.setLineDash([]);
-      ctx.beginPath();ctx.arc(x,y-7,4,0,2*Math.PI);ctx.fillStyle=col;ctx.fill();
+// ─── Dibujo de ECG ────────────────────────────────────────────────────────────
+function drawECG(id, sig, picos, col, showR) {
+  const cv = document.getElementById(id);
+  if (!cv || !sig) return;
+  const ctx = cv.getContext("2d");
+  const W   = cv.width  = cv.offsetWidth;
+  const H   = cv.height;
+
+  ctx.fillStyle = "#fff";
+  ctx.fillRect(0, 0, W, H);
+
+  // Papel ECG: cuadrícula pequeña (1mm) y grande (5mm)
+  const mmPx = W / (DUR * 25);  // 25mm/s velocidad estándar
+  ctx.strokeStyle = "#f5ecec"; ctx.lineWidth = 0.4;
+  for (let x = 0; x <= W; x += mmPx) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += mmPx) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  ctx.strokeStyle = "#e8d8d8"; ctx.lineWidth = 0.8;
+  for (let x = 0; x <= W; x += mmPx*5) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y <= H; y += mmPx*5) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+  // Escala de señal
+  let mn = Infinity, mx = -Infinity;
+  for (let i = 0; i < sig.length; i++) { if (sig[i]<mn) mn=sig[i]; if (sig[i]>mx) mx=sig[i]; }
+  const pad  = (mx - mn) * 0.15 || 0.1;
+  const vmin = mn - pad, vmax = mx + pad;
+  const toX  = i => (i / (sig.length - 1)) * W;
+  const toY  = v => H - ((v - vmin) / (vmax - vmin)) * H;
+
+  // Señal ECG
+  ctx.strokeStyle = col; ctx.lineWidth = 1.8;
+  ctx.lineJoin = "round"; ctx.lineCap = "round";
+  ctx.beginPath();
+  for (let i = 0; i < sig.length; i++) {
+    i === 0 ? ctx.moveTo(toX(i), toY(sig[i])) : ctx.lineTo(toX(i), toY(sig[i]));
+  }
+  ctx.stroke();
+
+  // Picos R y etiquetas PQRST
+  if (showR && picos?.length) {
+    // Líneas verticales en R
+    for (const p of picos) {
+      const x = toX(p), y = toY(sig[p]);
+      ctx.setLineDash([3, 5]); ctx.strokeStyle = col+"44"; ctx.lineWidth = 0.8;
+      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.beginPath(); ctx.arc(x, y-7, 4, 0, 2*Math.PI);
+      ctx.fillStyle = col; ctx.fill();
     }
-    const R2=picos[Math.min(1,picos.length-1)];
-    [["P",-0.063,0.07],["Q",-0.023,-0.07],["S",0.028,-0.07],["T",0.162,0.08]].forEach(([lbl,dt,dy])=>{
-      const tx=R2/FS+dt;if(tx>0&&tx<DUR){const idx=Math.round(tx*FS);if(idx>=0&&idx<sig.length){ctx.fillStyle=col;ctx.font="600 9px 'Instrument Sans',sans-serif";ctx.textAlign="center";ctx.fillText(lbl,toX(idx),toY(sig[idx])+dy*H*0.5);}}
+    // Etiquetas en el 2do latido (más centrado en pantalla)
+    const refLat = picos[Math.min(1, picos.length-1)];
+    const R2t    = refLat / FS;
+    const ciclo  = 60 / RITMOS[state.ritmoKey].bpm;
+    const cl     = ciclo;
+
+    // Etiquetas relativas al latido de referencia
+    const labels = [
+      ["P",  -0.095,  0.12],
+      ["Q",  -0.025, -0.09],
+      ["S",   0.023, -0.09],
+      ["T",   0.185,  0.11],
+    ];
+    ctx.font = "bold 9px 'Instrument Sans',sans-serif";
+    labels.forEach(([lbl, dt, dy]) => {
+      const tx = R2t + dt;
+      if (tx > 0 && tx < DUR) {
+        const idx = Math.round(tx * FS);
+        if (idx >= 0 && idx < sig.length) {
+          ctx.fillStyle = col;
+          ctx.textAlign = "center";
+          ctx.fillText(lbl, toX(idx), toY(sig[idx]) + dy * H * 0.45);
+        }
+      }
     });
-    const xR=toX(R2),yR=toY(sig[R2]);ctx.fillStyle=col;ctx.font="600 9px 'Instrument Sans',sans-serif";ctx.textAlign="center";ctx.fillText("R",xR,yR-16);ctx.textAlign="left";
+    // Etiqueta R
+    const xR = toX(refLat), yR = toY(sig[refLat]);
+    ctx.fillStyle = col;
+    ctx.textAlign = "center";
+    ctx.fillText("R", xR, yR - 16);
+    ctx.textAlign = "left";
   }
 }
-function drawRR(id,rrMs,fcI){
-  const cv=document.getElementById(id);if(!cv||!rrMs?.length)return;
-  const ctx=cv.getContext("2d"),W=cv.width=cv.offsetWidth,H=cv.height;
-  ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
-  for(let j=0;j<=4;j++){ctx.strokeStyle="#f0f0ee";ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(0,j/4*H);ctx.lineTo(W,j/4*H);ctx.stroke();}
-  const pl={l:30,r:10,t:14,b:14},cW=W-pl.l-pl.r,cH=H-pl.t-pl.b;
-  const mn=Math.min(...rrMs)*0.94,mx=Math.max(...rrMs)*1.06,toY=v=>pl.t+cH-((v-mn)/(mx-mn))*cH;
-  const bw=Math.min(cW/rrMs.length*0.55,22);
-  rrMs.forEach((rr,i)=>{const x=pl.l+(i+0.5)*(cW/rrMs.length)-bw/2,y=toY(rr),bh=pl.t+cH-y;ctx.fillStyle="rgba(90,45,138,0.1)";ctx.fillRect(x,y,bw,bh);ctx.strokeStyle="#7a3e8a";ctx.lineWidth=1;ctx.strokeRect(x,y,bw,bh);});
-  if(fcI?.length===rrMs.length){
-    const mn2=Math.min(...fcI)*0.94,mx2=Math.max(...fcI)*1.06,toY2=v=>pl.t+cH-((v-mn2)/(mx2-mn2))*cH;
-    ctx.strokeStyle="#b35c00";ctx.lineWidth=1.8;ctx.beginPath();fcI.forEach((fc,i)=>{const x=pl.l+(i+0.5)*(cW/fcI.length);i===0?ctx.moveTo(x,toY2(fc)):ctx.lineTo(x,toY2(fc));});ctx.stroke();
-    fcI.forEach((fc,i)=>{const x=pl.l+(i+0.5)*(cW/fcI.length);ctx.beginPath();ctx.arc(x,toY2(fc),3,0,2*Math.PI);ctx.fillStyle="#b35c00";ctx.fill();});
-  }
-  ctx.fillStyle="#9a9a96";ctx.font="9px 'DM Mono',monospace";ctx.fillText("RR",4,12);ctx.textAlign="right";ctx.fillText("FC",W-4,12);ctx.textAlign="left";
-}
-function drawPSD(id,sig){
-  const cv=document.getElementById(id);if(!cv||!sig)return;
-  const ctx=cv.getContext("2d"),W=cv.width=cv.offsetWidth,H=cv.height;
-  ctx.fillStyle="#fff";ctx.fillRect(0,0,W,H);
-  for(let j=0;j<=4;j++){ctx.strokeStyle="#f0f0ee";ctx.lineWidth=0.7;ctx.beginPath();ctx.moveTo(0,j/4*H);ctx.lineTo(W,j/4*H);ctx.stroke();}
-  const{freqs,power}=calcPSD(sig),fmax=80;
-  const sub=freqs.map((f,i)=>[f,power[i]]).filter(d=>d[0]<=fmax);if(!sub.length)return;
-  const mn=Math.min(...sub.map(d=>d[1])),mx=Math.max(...sub.map(d=>d[1])),toX=f=>(f/fmax)*W,toY=p=>H-((p-mn)/(mx-mn))*(H*0.85)-H*0.05;
-  const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,"rgba(26,107,107,0.15)");grad.addColorStop(1,"rgba(26,107,107,0.02)");
-  ctx.fillStyle=grad;ctx.beginPath();ctx.moveTo(toX(sub[0][0]),H);sub.forEach(([f,p])=>ctx.lineTo(toX(f),toY(p)));ctx.lineTo(toX(sub[sub.length-1][0]),H);ctx.closePath();ctx.fill();
-  ctx.strokeStyle="#1a6b6b";ctx.lineWidth=1.5;ctx.beginPath();sub.forEach(([f,p],i)=>i===0?ctx.moveTo(toX(f),toY(p)):ctx.lineTo(toX(f),toY(p)));ctx.stroke();
-  [[0.5,"#b35c00"],[40,"#c0392b"],[60,"#5a2d8a"]].forEach(([f,col])=>{if(f<=fmax){ctx.strokeStyle=col;ctx.lineWidth=1;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(toX(f),0);ctx.lineTo(toX(f),H);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=col;ctx.font="8px 'DM Mono',monospace";ctx.fillText(f+"Hz",toX(f)+2,11);}});
+
+// ─── Actualizar UI ────────────────────────────────────────────────────────────
+function updateUI() {
+  const { raw, filt, picos, res } = state;
+  const R = RITMOS[state.ritmoKey];
+  if (!res) return;
+
+  const fcN  = parseFloat(res.fcMed);
+  const fcC  = (fcN >= 60 && fcN <= 100) ? "#2a7a4b" : "#c0392b";
+  const qrsC = parseFloat(res.qrsMs) < 120 ? "#2a7a4b" : "#c0392b";
+  const qtcC = parseFloat(res.qtcMs) < 440 ? "#1a4e8a" : "#c0392b";
+
+  // Top bar vitales
+  document.getElementById("tv-hr").textContent  = res.fcMed;
+  document.getElementById("tv-hr").style.color   = fcC;
+  document.getElementById("tv-qrs").textContent = res.qrsMs;
+  document.getElementById("tv-qrs").style.color  = qrsC;
+  document.getElementById("tv-qtc").textContent = res.qtcMs;
+  document.getElementById("tv-qtc").style.color  = qtcC;
+  document.getElementById("tv-rr").textContent  = res.rrMed;
+  document.getElementById("diag-bar").textContent = res.diag;
+  document.getElementById("diag-bar").style.color  = res.diagCol;
+
+  // Canvas
+  drawECG("cv-raw",  raw,  null,                      "#c8d0ca",       false);
+  drawECG("cv-filt", filt, state.showR ? picos : null, R.col, state.showR);
+
+  document.getElementById("lbl-filt").textContent =
+    `II · ECG Filtrado ${state.filtOn ? "(Butterworth 0.5–40 Hz + Notch 60 Hz)" : "(Sin Filtro)"}  ·  Picos R: ${picos.length}`;
+
+  // Diagnóstico card
+  document.getElementById("diag-text").textContent  = res.diag;
+  document.getElementById("diag-text").style.color   = res.diagCol;
+  document.getElementById("diag-card").style.borderLeftColor = res.diagCol;
+
+  document.getElementById("chips").innerHTML = [
+    { l:"QRS",     v: res.qrsMs + " ms", c: qrsC,    r:"< 120 ms"   },
+    { l:"QTc",     v: res.qtcMs + " ms", c: qtcC,    r:"< 440 ms"   },
+    { l:"Picos R", v: picos.length,       c:"#2a7a4b", r:"detectados" },
+  ].map(({l,v,c,r}) => `
+    <div class="chip" style="border-color:${c}33;background:${c}08;">
+      <div class="chip-label">${l}</div>
+      <div class="chip-val" style="color:${c}">${v}</div>
+      <div class="chip-ref">${r}</div>
+    </div>`).join("");
+
+  // Métricas
+  document.getElementById("big-metrics").innerHTML = [
+    { l:"Frec. Cardiaca", v: res.fcMed,  u:"lpm", r:"60–100",   c: fcC  },
+    { l:"Intervalo RR",   v: res.rrMed,  u:"ms",  r:"600–1000", c:"#7a3e8a" },
+    { l:"Complejo QRS",   v: res.qrsMs,  u:"ms",  r:"< 120",    c: qrsC },
+    { l:"QTc Bazett",     v: res.qtcMs,  u:"ms",  r:"< 440",    c: qtcC },
+    { l:"Intervalo QT",   v: res.qtMs,   u:"ms",  r:"350–440",  c:"#1a4e8a" },
+  ].map(({l,v,u,r,c}) => `
+    <div class="metric-card" style="border-top-color:${c};">
+      <div class="m-label">${l}</div>
+      <div class="m-val" style="color:${c}">${v}</div>
+      <div class="m-unit">${u}</div>
+      <div class="m-ref">${r}</div>
+    </div>`).join("");
+
+  // Badge
+  document.getElementById("badge-label").textContent   = R.label;
+  document.getElementById("badge-label").style.color    = R.col;
+  document.getElementById("badge-bpm").textContent      = R.bpm + " lpm base";
+  document.getElementById("badge-inner").style.borderColor = R.col + "44";
 }
 
-function updateUI(){
-  const{raw,filt,picos,res}=state,R=RITMOS[state.ritmoKey];if(!res)return;
-  const fcN=parseFloat(res.fcMed),fcC=fcN>=60&&fcN<=100?"#2a7a4b":"#c0392b";
-  const qrsC=parseFloat(res.qrsMs)<120?"#2a7a4b":"#c0392b",qtcC=parseFloat(res.qtcMs)<440?"#1a4e8a":"#c0392b";
-  document.getElementById("tv-hr").textContent=res.fcMed;document.getElementById("tv-hr").style.color=fcC;
-  document.getElementById("tv-qrs").textContent=res.qrsMs;document.getElementById("tv-qrs").style.color=qrsC;
-  document.getElementById("tv-qtc").textContent=res.qtcMs;document.getElementById("tv-qtc").style.color=qtcC;
-  document.getElementById("tv-rr").textContent=res.rrMed;
-  document.getElementById("diag-bar").textContent=res.diag;document.getElementById("diag-bar").style.color=res.diagCol;
-  drawECG("cv-raw",raw,null,"#c8d0ca",false);
-  drawECG("cv-filt",filt,state.showR?picos:null,R.col,state.showR);
-  document.getElementById("lbl-filt").textContent=`II · ECG Filtrado ${state.filtOn?"(Butterworth 0.5–40 Hz + Notch 60 Hz)":"(Sin Filtro)"}  ·  Picos R: ${picos.length}`;
-  document.getElementById("diag-text").textContent=res.diag;document.getElementById("diag-text").style.color=res.diagCol;
-  document.getElementById("diag-card").style.borderLeftWidth="3px";document.getElementById("diag-card").style.borderLeftColor=res.diagCol;
-  document.getElementById("chips").innerHTML=[
-    {l:"QRS",v:res.qrsMs+" ms",c:qrsC,r:"< 120 ms"},{l:"QTc",v:res.qtcMs+" ms",c:qtcC,r:"< 440 ms"},{l:"Picos R",v:picos.length,c:"#2a7a4b",r:"detectados"},
-  ].map(({l,v,c,r})=>`<div class="chip" style="border-color:${c}33;background:${c}08;"><div class="chip-label">${l}</div><div class="chip-val" style="color:${c}">${v}</div><div class="chip-ref">${r}</div></div>`).join("");
-  document.getElementById("big-metrics").innerHTML=[
-    {l:"Frec. Cardiaca",v:res.fcMed,u:"lpm",r:"60–100",c:fcC},{l:"Intervalo RR",v:res.rrMed,u:"ms",r:"600–1000",c:"#7a3e8a"},
-    {l:"Complejo QRS",v:res.qrsMs,u:"ms",r:"< 120",c:qrsC},{l:"QTc Bazett",v:res.qtcMs,u:"ms",r:"< 440",c:qtcC},{l:"Intervalo QT",v:res.qtMs,u:"ms",r:"350–440",c:"#1a4e8a"},
-  ].map(({l,v,u,r,c})=>`<div class="metric-card" style="border-top-color:${c};"><div class="m-label">${l}</div><div class="m-val" style="color:${c}">${v}</div><div class="m-unit">${u}</div><div class="m-ref">${r}</div></div>`).join("");
-  drawRR("cv-rr",res.rrMs,res.fcI);
-  document.getElementById("clin-tbody").innerHTML=[
-    ["Frecuencia Cardiaca",res.fcMed,"lpm","60–100",fcC,fcN>=60&&fcN<=100?"Normal":"Anormal"],
-    ["Intervalo RR medio",res.rrMed,"ms","600–1000","#7a3e8a","Normal"],
-    ["Duración QRS",res.qrsMs,"ms","< 120",qrsC,parseFloat(res.qrsMs)<120?"Normal":"Ancho"],
-    ["Intervalo PR","~160","ms","120–200","#2a7a4b","Normal"],
-    ["Intervalo QT",res.qtMs,"ms","350–440","#1a4e8a","Normal"],
-    ["QTc (Bazett)",res.qtcMs,"ms","< 440",qtcC,parseFloat(res.qtcMs)<440?"Normal":"Largo"],
-  ].map(([n,v,u,r,c,s])=>`<tr><td>${n}</td><td style="color:${c}">${v}</td><td style="color:var(--text-muted)">${u}</td><td style="color:var(--text-muted)">${r}</td><td><span class="status-badge" style="background:${c}14;border:1px solid ${c}33;color:${c}">${s}</span></td></tr>`).join("");
-  document.getElementById("hrv-cards").innerHTML=[
-    {l:"SDNN",v:res.sdnn,u:"ms",d:"Variabilidad global. Valores saludables > 50 ms."},{l:"RMSSD",v:res.rmssd,u:"ms",d:"Indicador del tono vagal y actividad parasimpática."},{l:"pNN50",v:res.pnn50,u:"%",d:"% diferencias > 50 ms. Marcador autonómico vagal."},
-  ].map(({l,v,u,d})=>`<div class="hrv-card"><div class="h-label">${l}</div><div class="h-val">${v}<span class="h-unit"> ${u}</span></div><div class="h-desc">${d}</div></div>`).join("");
-  const tw=document.getElementById("tacho-wrap");tw.innerHTML="";
-  if(res.fcI?.length>1){const mn=Math.min(...res.fcI),mx=Math.max(...res.fcI);res.fcI.forEach(fc=>{const h=mx===mn?50:((fc-mn)/(mx-mn))*75+10,bar=document.createElement("div");bar.style.cssText=`flex:1;height:${h}%;background:rgba(179,92,0,0.12);border:1px solid rgba(179,92,0,0.4);border-radius:2px 2px 0 0;min-width:8px;`;bar.title=`${fc.toFixed(1)} lpm`;tw.appendChild(bar);});}
-  drawPSD("cv-psd",filt||raw);
-  document.getElementById("badge-label").textContent=R.label;document.getElementById("badge-label").style.color=R.col;
-  document.getElementById("badge-bpm").textContent=R.bpm+" lpm base";document.getElementById("badge-inner").style.borderColor=R.col+"44";
+// ─── Simulación (pipeline con progreso) ──────────────────────────────────────
+function simular() {
+  const btn = document.getElementById("btn-sim");
+  const pb  = document.getElementById("prog-bar");
+  btn.disabled = true; btn.textContent = "Procesando...";
+  const setP = p => { pb.style.width = p + "%"; };
+
+  setP(10);
+  setTimeout(() => {
+    state.raw = generarSenal(state.ritmoKey);
+    setP(40);
+    setTimeout(() => {
+      state.filt  = state.filtOn ? filtrar(state.raw) : state.raw;
+      setP(65);
+      setTimeout(() => {
+        state.picos = detectarR(state.filt);
+        setP(85);
+        setTimeout(() => {
+          state.res = analizar(state.filt, state.picos);
+          setP(100);
+          setTimeout(() => {
+            updateUI();
+            btn.disabled = false; btn.textContent = "Simular"; setP(0);
+          }, 120);
+        }, 50);
+      }, 50);
+    }, 50);
+  }, 50);
 }
 
-function simular(){
-  const btn=document.getElementById("btn-sim"),pb=document.getElementById("prog-bar");
-  btn.disabled=true;btn.textContent="Procesando...";const setP=p=>{pb.style.width=p+"%";};setP(10);
-  setTimeout(()=>{state.raw=generarSenal(state.ritmoKey,state.noise,state.drift);setP(35);
-  setTimeout(()=>{state.filt=state.filtOn?filtrar(state.raw):state.raw;setP(60);
-  setTimeout(()=>{state.picos=detectarR(state.filt);setP(80);
-  setTimeout(()=>{state.res=analizar(state.filt,state.picos);setP(100);
-  setTimeout(()=>{updateUI();btn.disabled=false;btn.textContent="Simular";setP(0);},150);},60);},60);},60);},60);
-}
-
-function init(){
-  const list=document.getElementById("rhythm-list");
-  Object.entries(RITMOS).forEach(([k,R])=>{
-    const btn=document.createElement("button");
-    btn.className="rhythm-btn"+(k===state.ritmoKey?" active":"");btn.dataset.key=k;
-    btn.innerHTML=`<span class="rhythm-dot" style="background:${R.col}"></span>${R.nombre}<span class="rhythm-bpm">${R.bpm}</span>`;
-    btn.onclick=()=>{state.ritmoKey=k;list.querySelectorAll(".rhythm-btn").forEach(b=>{b.classList.toggle("active",b.dataset.key===k);});};
+// ─── Inicialización ───────────────────────────────────────────────────────────
+function init() {
+  // Poblar lista de ritmos
+  const list = document.getElementById("rhythm-list");
+  Object.entries(RITMOS).forEach(([k, R]) => {
+    const btn = document.createElement("button");
+    btn.className = "rhythm-btn" + (k === state.ritmoKey ? " active" : "");
+    btn.dataset.key = k;
+    btn.innerHTML = `
+      <span class="rhythm-dot" style="background:${R.col}"></span>
+      ${R.nombre}
+      <span class="rhythm-bpm">${R.bpm}</span>`;
+    btn.onclick = () => {
+      state.ritmoKey = k;
+      list.querySelectorAll(".rhythm-btn")
+          .forEach(b => b.classList.toggle("active", b.dataset.key === k));
+    };
     list.appendChild(btn);
   });
-  const slN=document.getElementById("sl-noise"),lN=document.getElementById("lbl-noise");slN.oninput=()=>{state.noise=parseFloat(slN.value);lN.textContent=slN.value;};
-  const slD=document.getElementById("sl-drift"),lD=document.getElementById("lbl-drift");slD.oninput=()=>{state.drift=parseFloat(slD.value);lD.textContent=slD.value;};
-  document.getElementById("cb-filt").onchange=e=>{state.filtOn=e.target.checked;};
-  document.getElementById("cb-rpeak").onchange=e=>{state.showR=e.target.checked;updateUI();};
-  document.getElementById("btn-sim").onclick=simular;
-  document.querySelectorAll(".tab").forEach(t=>{
-    t.onclick=()=>{
-      document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));document.querySelectorAll(".panel").forEach(x=>x.classList.remove("active"));
-      t.classList.add("active");document.getElementById("p-"+t.dataset.tab).classList.add("active");
-      setTimeout(()=>{
-        if(t.dataset.tab==="ecg"){drawECG("cv-raw",state.raw,null,"#c8d0ca",false);drawECG("cv-filt",state.filt,state.showR?state.picos:null,RITMOS[state.ritmoKey].col,state.showR);}
-        if(t.dataset.tab==="analisis")drawRR("cv-rr",state.res?.rrMs,state.res?.fcI);
-        if(t.dataset.tab==="espectro")drawPSD("cv-psd",state.filt||state.raw);
-      },30);
-    };
-  });
-  window.addEventListener("resize",()=>{setTimeout(updateUI,100);});
+
+  // Controles
+  document.getElementById("cb-filt").onchange  = e => { state.filtOn = e.target.checked; };
+  document.getElementById("cb-rpeak").onchange = e => { state.showR  = e.target.checked; updateUI(); };
+  document.getElementById("btn-sim").onclick   = simular;
+
+  window.addEventListener("resize", () => setTimeout(updateUI, 100));
   simular();
 }
-window.onload=init;
+
+window.onload = init;
 </script>
 </body>
 </html>
+
